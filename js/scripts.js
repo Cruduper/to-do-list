@@ -14,6 +14,15 @@ ToDoList.prototype.giveId = function()  {
   return this.currentId;
 };
 
+ToDoList.prototype.findTask = function(id) {
+  if (this.taskList[id] != undefined) {
+    return this.taskList[id];
+  }
+  else {
+    return false;
+  }
+};
+
 ToDoList.prototype.deleteTask = function(id)  {
   if (this.taskList[id] === undefined)  {
     return false;
@@ -35,11 +44,24 @@ function Task(name) {
 } 
 
 //UI logic
-let toDoList 
+let toDoList = new ToDoList();
+
+function displayTaskList(toDoListToDisplay) {
+  let taskListOutput = $("ul#task-list");
+  let htmlForTaskInfo = "";
+  Object.keys(toDoListToDisplay.taskList).forEach(function(key) {
+    const task = toDoListToDisplay.findTask(key);
+    htmlForTaskInfo += "<li id=" + task.id + ">" + task.name + " " + task.status + "</li>";
+  });
+  taskListOutput.html(htmlForTaskInfo);
+}
+
 $(document).ready(function() {
   $("form#add-task").submit(function(event) {
     event.preventDefault();
     const inputTask = $("input#new-task").val();
     let newTask = new Task(inputTask);
-    ToDoList.addTask
+    toDoList.addTask(newTask);
+    displayTaskList(toDoList);
   });
+});
