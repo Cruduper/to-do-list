@@ -28,18 +28,18 @@ ToDoList.prototype.completedTask = function(id) {
   this.taskList[id].status = "completed";
 };
 
-
 //Business logic for task
 function Task(name) {
   this.name = name;
   this.status = "incomplete"; //default task as incomplete
 } 
 
-
-
 //UI logic
+let toDoList 
 $(document).ready(function() {
-
-
-
-});
+  $("form#add-task").submit(function(event) {
+    event.preventDefault();
+    const inputTask = $("input#new-task").val();
+    let newTask = new Task(inputTask);
+    ToDoList.addTask
+  });
