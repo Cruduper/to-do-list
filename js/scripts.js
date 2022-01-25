@@ -46,6 +46,28 @@ function Task(name) {
 //UI logic
 let toDoList = new ToDoList();
 
+function attachTaskListeners()  {
+  $("ul#task-list").on("click", "li", function() {
+    showTask(this.id);
+  });
+
+  $("#buttons").on("click", ".deleteButton", function() {
+    toDoList.deleteTask(this.id);
+    $("show-task").hide();
+    displayTaskList(toDoList);
+  });
+}
+
+function showTask(taskId) {
+  const task = toDoList.findTask(taskId);
+  $("#show-task").show();
+  $(".name").html(task.name);
+  $(".status").html(task.status);
+  let buttons = $("#buttons");
+  buttons.empty();
+  buttons.append("<button class='deleteButton' id=" + task.id + ">Delete</button>");
+}
+
 function displayTaskList(toDoListToDisplay) {
   let taskListOutput = $("ul#task-list");
   let htmlForTaskInfo = "";
@@ -57,6 +79,8 @@ function displayTaskList(toDoListToDisplay) {
 }
 
 $(document).ready(function() {
+  attachTaskListeners();
+
   $("form#add-task").submit(function(event) {
     event.preventDefault();
     const inputTask = $("input#new-task").val();
