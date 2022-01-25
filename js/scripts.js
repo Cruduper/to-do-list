@@ -53,8 +53,8 @@ function attachTaskListeners()  {
 
   $("#buttons").on("click", ".deleteButton", function() {
     toDoList.deleteTask(this.id);
-    $("show-task").hide();
-    displayTaskList(toDoList);
+    $("#show-task").hide();
+    displayTaskList(toDoList)
   });
 }
 
@@ -84,6 +84,7 @@ $(document).ready(function() {
   $("form#add-task").submit(function(event) {
     event.preventDefault();
     const inputTask = $("input#new-task").val();
+    $("input#new-task").val("");
     let newTask = new Task(inputTask);
     toDoList.addTask(newTask);
     displayTaskList(toDoList);
